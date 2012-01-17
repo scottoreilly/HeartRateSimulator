@@ -31,7 +31,7 @@
 		var minFetalVariability = 0.2;
 		var fetalVariabilityChangeRate = 50; //how often the Variability changes (in seconds)
 
-		// Volatility determines the variation from the previous value
+		// Volatility determines how far from the previous value the heartrate can travel
 		var maxFetalVolatility = 1.0;
 		var minFetalVolatility = 0.1;
 		var fetalVolatilityChangeRate = 50; //how often the Volatility changes (in seconds)
@@ -82,6 +82,12 @@
 			<li>5x</li>
 			<li>9x</li>
 		</ol>
+	</div>
+	
+	<div style="width: 400px; margin: 40px;">
+		<input type="radio" name="group1" value="-1" onclick="setVariabilityAndVolatility(2, 0.2, 0.6, 0.1);"> Doesn't change enough<br>
+		<input type="radio" name="group1" value="0" onclick="setVariabilityAndVolatility(10, 0.2, 1.0, 0.1);" checked> Normal<br>
+		<input type="radio" name="group1" value="1" onclick="setVariabilityAndVolatility(20, 10, 5, 0.1);"> Changes too much
 	</div>
 </body>
 </html>

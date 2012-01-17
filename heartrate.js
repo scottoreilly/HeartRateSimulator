@@ -57,6 +57,14 @@ var getFetalVolatility = function() {
 	return fetalVolatility;
 };
 
+// helper function to set the variability and volatility variables
+var setVariabilityAndVolatility = function(maxVariab, minVariab, maxVolat, minVolat) {
+	maxFetalVariability = maxVariab;
+	minFetalVariability = minVariab;
+	maxFetalVolatility = maxVolat;
+	minFetalVolatility = minVolat;
+}
+
 // a helper function to generate a random number within in a specific range
 var randomFromTo = function(from, to) {
 	return Math.floor(Math.random() * (to - from + 1) + from);
