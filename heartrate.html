@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fetal Heart Rate Monitoring</title>
+	<style type="text/css">
+		@import "http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/resources/dojo.css";
+		@import "http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/claro/claro.css";
+	</style>
+	<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js"
+		data-dojo-config="parseOnLoad: true" type="text/javascript"></script>
+	<script type="text/javascript">
+		dojo.require("dojo.parser");
+		dojo.require("dojox.charting.Chart2D");
+		dojo.require("dojox.charting.axis2d.Default");
+		dojo.require("dojox.charting.plot2d.Grid");
+		dojo.require("dojox.charting.themes.Tufte");
+		dojo.require("dijit.form.HorizontalSlider");
+		dojo.require("dijit.form.HorizontalRuleLabels");
+		dojo.require("dijit.form.HorizontalRule");
+	</script>
+	<script src="heartrate.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		// ***************************************************************************************
+		// ***   Adjust these variables to change the graph                                    ***
+		// ***************************************************************************************
+		// The baseline heartrate
+		var fetalBaseline = 135;
+
+		// Variability determines how far from the baseline the heartrate can travel
+		var maxFetalVariability = 10;
+		var minFetalVariability = 0.2;
+		var fetalVariabilityChangeRate = 50; //how often the Variability changes (in seconds)
+
+		// Volatility determines the variation from the previous value
+		var maxFetalVolatility = 1.0;
+		var minFetalVolatility = 0.1;
+		var fetalVolatilityChangeRate = 50; //how often the Volatility changes (in seconds)
+
+		// Configure the chart itself
+		var xAxisSize = 500;
+		var yAxisMax = 210;
+		var yAxisMin = 30;
+		var startWithPrefilledValues = true;
+		
+		// ***************************************************************************************
+		// ***   these are variables that shouldn't be adjusted but are used making the chart  ***
+		// ***************************************************************************************
+		var fetalChart;
+		var seriesA;
+		var timer = 0; //the number of seconds that have passed
+		var intervalId;
+		var previousHeartRateValue = fetalBaseline;
+		var fetalVariability = (maxFetalVariability + minFetalVariability) / 2;
+		var fetalVolatility = (maxFetalVolatility + minFetalVolatility) / 2;
+		var currentEvent;
+		var eventStartTime;
+		
+		// once all of the HTML is rendered, make the chart
+		dojo.addOnLoad(makeObjects);
+		dojo.addOnLoad(function(){setSpeed(dijit.byId("speedSlider").value)});
+	</script>
+</head>
+<body class="claro" style="margin: 25px">
+	<h1>Fetal Heart Rate Demo</h1>
+	<p>
+		This is a test for Zack.
+	</p>
+	<div id="fetalDojoChart" style="width: 900px; height: 400px;"></div>
+	<div>
+		<button onclick="startEvent(dropHeartRateTestEvent);">Drop Heart Rate</button>
+		<button onclick="startEvent(slowHeartRateTestEvent);">Slow Heart Rate</button>
+	</div>
+	
+	<div style="width: 400px; margin: 40px;">
+		<input id="speedSlider" onChange="setSpeed(this.value)" type="range" data-dojo-type="dijit.form.HorizontalSlider"
+		data-dojo-props="minimum: 1, maximum: 9, value: 5, discreteValues: 9, showButtons: false">
+		<div data-dojo-type="dijit.form.HorizontalRule"
+			data-dojo-props="container: 'bottomDecoration', count: 5, style: 'height: 5px; margin: 0 12px;'"></div>
+		<ol data-dojo-type="dijit.form.HorizontalRuleLabels"
+			data-dojo-props="container: 'bottomDecoration', style: 'height: 1em; font-weight: bold;'">
+			<li>real-time</li>
+			<li>5x</li>
+			<li>9x</li>
+		</ol>
+	</div>
+</body>
+</html>
