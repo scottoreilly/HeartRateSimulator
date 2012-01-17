@@ -105,7 +105,8 @@ var makeObjects = function(){
 		majorTickStep: 30, 
 		minorTickStep: 10
 	});
-	fetalChart.addPlot("default", {type: "Lines", tension: 2});
+	//fetalChart.addPlot("default", {type: "Lines", tension: 2});
+	fetalChart.addPlot("default", {type: "Lines"});
 	seriesA = makeSeries(xAxisSize);
 	fetalChart.addSeries("Series A", seriesA, {
 		stroke: {
